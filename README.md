@@ -11,6 +11,8 @@ path is your path
 component is your component - you will need to import them into your route.js file.
 Routes may be nested however your like, just follow the same settup with {this.props.children} as seen in the Application.jsx below anywhere you nest.
 ```
+import { Route, matchRoute, prepareRoutes, updateRoutes } from 'react-chronicle-router';
+
 var routes = (
   <Route key="applicationKey" path="/" component={Application}>
     <Route key="page1Key" path="/page1" component={Page1}/>
