@@ -1,6 +1,6 @@
 import url from 'url';
 
-class chronicle {
+export class chronicle {
   constructor(url) {
     this.url = "";
     this.parsedUrl = {};
@@ -98,5 +98,3 @@ class chronicle {
     this.url = url;
   }
 };
-
-export default chronicle;

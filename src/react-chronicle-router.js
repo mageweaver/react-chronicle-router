@@ -1,23 +1,75 @@
 import React from 'react';
-import chronicle from './chronicle.js';
+import {chronicle} from './chronicle.js'
+
+export class Route extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      path	: this.props.path,
+      isActive	: this.props.isActive,
+      component	: this.props.component,
+      onMount	: this.props.onMount,
+      onUnmount	: this.props.onUnmount
+    };
+  }
+
+  componentWillReceiveProps(nextProps) {
+  }
+
+  componentDidMount() {
+    if(this.state.onMount !== undefined) {
+      this.state.onMount(this);
+    }
+  }
+
+  componentWillUnmount() {
+    if(this.state.onUnmount !== undefined) {
+      this.state.onUnmount(this);
+    }
+  }
+
+  render() {
+    if(this.props.isActive) {
+      return (<this.props.component {...this.props}>{this.props.children}</this.props.component>);
+    }
+    else {
+      return false;
+    }
+  }
+};
+
+Route.propTypes = {
+  history	: React.PropTypes.object,
+  path		: React.PropTypes.string.isRequired,
+  isActive	: React.PropTypes.bool,
+  component	: React.PropTypes.func.isRequired,
+  onMount	: React.PropTypes.func,
+  onUnmount	: React.PropTypes.func
+};
+
+Route.defaultProps = {
+  isActive	: false,
+  properties	: {}
+};
 
 /**
  * Step 1: matchRoute
- * 
+ *
  * This method builds our route table based on the criteria provided.
  *
  * criteria: (transport that describes our routes and state)
- *   1. routes		: routes.js decriptor file
- *   2. location	: request location - required on the server side
- *   3. post		: request paramters
- *   4. container	: reactjs container div
+ *   1. routes          : routes.js decriptor file
+ *   2. location        : request location - required on the server side
+ *   3. post            : request paramters
+ *   4. container       : reactjs container div
  */
 export function matchRoute(criteria, callback) {
   var h;
 
   /**
    *  We need to let the chronicle module know what our selected location is
-   *  if it exists otherwise we will default to attempting to get it from 
+   *  if it exists otherwise we will default to attempting to get it from
    *  the browser.  In otherwords we must provide this server side.
    */
   if(typeof criteria.location !== 'undefined') {
@@ -39,20 +91,20 @@ export function matchRoute(criteria, callback) {
    * matches the route to our current location or returns an
    * HTTP error.
    */
-  var routeStatus	= matchRoutes(h, routes, null, 0);
+  var routeStatus       = matchRoutes(h, routes, null, 0);
 
   /**
    * Now lets ensure the request parameters travel to the callback.
    */
   if(criteria.post !== undefined) {
-    routeStatus.post	= criteria.post;
+    routeStatus.post    = criteria.post;
   }
 
   /**
    * Now lets ensure the state travels to the callback.
    */
   if(criteria.state !== undefined) {
-    routeStatus.state	= criteria.state;
+    routeStatus.state   = criteria.state;
   }
 
   /**
@@ -71,11 +123,11 @@ export function matchRoute(criteria, callback) {
 
 function matchRoutes(chronicle, route, parent, origin) {
   var routeStatus = {
-    status		: 0,
-    message		: "",
-    routeProperties	: [
+    status              : 0,
+    message             : "",
+    routeProperties     : [
     ],
-    setRouteStatus	: setRouteStatus
+    setRouteStatus      : setRouteStatus
   };
 
   if(route===undefined) {
@@ -85,11 +137,11 @@ function matchRoutes(chronicle, route, parent, origin) {
   // Check on whether we have a perfect or partial match to our location from the route
   var matchIndices = comparePath(chronicle, route.props.path, origin);
 
-  if(parent !== null && matchIndices[0] === -1) {	// No match found
+  if(parent !== null && matchIndices[0] === -1) {       // No match found
     return routeStatus.setRouteStatus(404,"'"+chronicle.parsedUrlPathname+"' not found.");
   }
 
-  if(matchIndices[0] !== -1 && matchIndices[1] === chronicle.parsedUrlPathArray.length) {	// Perfect Match
+  if(matchIndices[0] !== -1 && matchIndices[1] === chronicle.parsedUrlPathArray.length) {       // Perfect Match
     routeStatus = routeStatus.setRouteStatus(200,"Ok.");
     routeStatus.routeProperties.push({path: route.props.path, chronicle: chronicle, isActive: true, name: route.props.component.name});
     return routeStatus;
@@ -121,7 +173,7 @@ function comparePath(chronicle, routePath, origin) {
   var matchIndices = [-1, -1];
   var routePathArray = chronicle.parseRoutePathArray(routePath);
 
-  if(routePath.toLowerCase() === chronicle.parsedUrlPathname.toLowerCase()) {	// Perfect match.
+  if(routePath.toLowerCase() === chronicle.parsedUrlPathname.toLowerCase()) {   // Perfect match.
     matchIndices[0] = 0;
     matchIndices[1] = chronicle.parsedUrlPathArray.length;
     return matchIndices;
@@ -134,9 +186,9 @@ function comparePath(chronicle, routePath, origin) {
       break;
     }
 
-    if(routePathArray[x].toLowerCase() === chronicle.parsedUrlPathArray[i].toLowerCase()) {	// At least a partial match.
+    if(routePathArray[x].toLowerCase() === chronicle.parsedUrlPathArray[i].toLowerCase()) {     // At least a partial match.
       matchIndices[0] = i;
-      matchIndices[1] = i+1; 
+      matchIndices[1] = i+1;
       x++;
     }
   }
