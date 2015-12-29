@@ -4,7 +4,8 @@
   "description": "A router for ReactJS with full HTML5 history and Isomorphic support.",
   "main": "./dist/react-chronicle-router.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack --display-chunks --display-error-details --config webpack.config.js --progress --colors --profile",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -34,7 +35,16 @@
   },
   "devDependencies": {
     "babel": "^6.3.26",
-    "gulp": "^3.9.0",
-    "gulp-babel": "^6.1.1"
+    "babel-core": "^6.3.26",
+    "babel-loader": "^6.2.0",
+    "babel-plugin-react-transform": "^2.0.0",
+    "babel-plugin-syntax-function-bind": "^6.3.13",
+    "babel-plugin-transform-class-properties": "^6.3.13",
+    "babel-plugin-transform-es2015-arrow-functions": "^6.3.13",
+    "babel-plugin-transform-function-bind": "^6.3.13",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "babel-preset-stage-1": "^6.3.13",
+    "webpack": "^1.12.9"
   }
 }
