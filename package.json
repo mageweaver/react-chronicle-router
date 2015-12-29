@@ -21,7 +21,8 @@
     "html5",
     "isomorphic",
     "react-router",
-    "react-route"
+    "react-route",
+    "react-component"
   ],
   "author": "Jared Spigner",
   "license": "MIT",
