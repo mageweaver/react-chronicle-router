@@ -1,0 +1,40 @@
+{
+  "name": "react-chronicle-router",
+  "version": "1.0.0",
+  "description": "A router for ReactJS with full HTML5 history and Isomorphic support.",
+  "main": "./dist/react-chronicle-router.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/artificialtrends/react-chronicle-router.git"
+  },
+  "keywords": [
+    "reactjs",
+    "react",
+    "route",
+    "router",
+    "routing",
+    "history",
+    "html5",
+    "isomorphic",
+    "react-router",
+    "react-route"
+  ],
+  "author": "Jared Spigner",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/artificialtrends/react-chronicle-router/issues"
+  },
+  "homepage": "https://github.com/artificialtrends/react-chronicle-router#readme",
+  "dependencies": {
+    "react": "^0.14.3",
+    "url": "^0.11.0"
+  },
+  "devDependencies": {
+    "babel": "^6.3.26",
+    "gulp": "^3.9.0",
+    "gulp-babel": "^6.1.1"
+  }
+}
