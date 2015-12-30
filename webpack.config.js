@@ -21,7 +21,7 @@ module.exports = {
   },
   output: {
     path                : distPath,
-    filename            : 'react-chronicle-router.js',
+    filename            : 'index.js',
     library		: 'react-chronicle-router',
     libraryTarget	: 'umd'
   },

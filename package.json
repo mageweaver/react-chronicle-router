@@ -1,8 +1,8 @@
 {
   "name": "react-chronicle-router",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "A router for ReactJS with full HTML5 history and Isomorphic support.",
-  "main": "./dist/react-chronicle-router.js",
+  "main": "dist",
   "scripts": {
     "build": "webpack --display-chunks --display-error-details --config webpack.config.js --progress --colors --profile",
     "prepublish": "npm run build"
