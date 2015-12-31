@@ -1,16 +1,20 @@
-**To install npm i react-chronicle-router --save-dev**
+**To install**
+```shell
+npm i react-chronicle-router --save-dev
+```
 
 This is a router implementation for ReactJS that fully supports HTML5 History API and Isomorphic applications.  The goal of this router was to full support React .14 as well as provide easy use of state exchange and property control.
 
 **Usage:**
 
-**Step 1 Create a routes.js file**
+**Step 1 : Create a routes.js file**
 This file will contain your routes (for both the server and the client) as well as your rendering method on the client-side.
 key is required and must be unique - this is required by ReactJS rendering engine.
 path is your path
 component is your component - you will need to import them into your route.js file.
 Routes may be nested however your like, just follow the same settup with {this.props.children} as seen in the Application.jsx below anywhere you nest.
-```
+
+```javascript
 import { Route, matchRoute, prepareRoutes, updateRoutes } from 'react-chronicle-router';
 
 var routes = (
@@ -85,7 +89,7 @@ exports.renderClient = function(state, location, container, invalidPage) {
 
           return false;
         }
-        
+
         /**
          * Optional Step 3: updateRoutes
          *
@@ -106,7 +110,8 @@ exports.renderClient = function(state, location, container, invalidPage) {
 export default routes;
 ```
 Here is an example client.js file in an Isomorphic APP
-```
+
+```javascript
 main();
 
 function main() {
@@ -120,7 +125,8 @@ function main() {
 }
 ```
 Here is my Application.jsx
-```
+
+```javascript
 class Application extends React.Component {
   constructor(props) {
     super(props);
@@ -176,7 +182,8 @@ Application.defaultProps = {
 export default Application;
 ```
 Now lets look at one of the components - Page1.jsx
-```
+
+```javascript
 import React from 'react';
 import alt from '../../alt.js';
 import PageStore from './PageStore';
@@ -213,7 +220,7 @@ class Page1 extends React.Component {
     // Simple action for my text box below to update my ALTJS flux container
     PageActions.setPageId(e.target.value);
   }
-  
+
   // Now notice in my links below - I use override-route....This is important!
   //  Anywhere I want to override the links in my router to ensure the client intercepts the request and
   // the server never receives them I use this classname.  It also ensures history is insync.  Very easy.
@@ -239,7 +246,8 @@ Page1.defaultProps = {
 export default Page1;
 ```
 Now Lets look at Page2.jsx - same as Page1 so I will skip the comments! - If you want skip below to see the server-side code!!!
-```
+
+```javascript
 mport React from 'react';
 import alt from '../../alt.js';
 import PageStore from '../Page1/PageStore';
@@ -292,7 +300,8 @@ Page2.defaultProps = {
 export default Page2;
 ```
 This is a simple server.js file
-```
+
+```javascript
 'user strict';
 
 import express from 'express';
@@ -320,7 +329,8 @@ var listener = app.listen(app.get('port'), () => {
 ```
 Below is what is in my render.js file - remember it includes routes.js as well as react and react-dom/server
 It may look scary but I have a lot of stuff in here including WEBPACK REACT HOT LOADING, ISO/ALTJS - I will explain!
-```
+
+```javascript
 export default function(app, cfg, log) {
   // Express rocks - I choose to use a middleware method here that I do not return from (no use of next)
   app.use(function(request, response, next) {
@@ -345,7 +355,7 @@ export default function(app, cfg, log) {
 
         // YES WE USE ISO HERE AND NEED TO GET IT READY IT MAKES DEALING WITH FLUX FROM ALTJS A SYNCH!
         var iso = new Iso();
-        
+
         // LETS RENDER OUR REACT CODE TO A STRING - WE ARE SERVER SIDE - NO DOM HERE
         var appString = ReactDOMServer.renderToString(preparedRoutes);
 
@@ -382,6 +392,6 @@ export default function(app, cfg, log) {
     });
   });
 }
-        
+
 ```
 Thats it easy and highly functional!!!!!
